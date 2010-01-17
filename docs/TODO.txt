@@ -1,0 +1,36 @@
+Features:
+
+Models
+
+* DONE extensible heirarchy of HelpCategories
+* DONE 1..n HelpItems in each endpoint category
+* DONE subcategories() method/property
+
+* variable content of HelpItems - minimum is HTML, extend via either TinyMCE or other
+
+* ordering, within categories and overall
+
+* django-tagging for categories
+* use tagging to suggest related topics
+* get_related_items() method, returning other items in cateory and/or items with shared tags
+
+Admin
+* DONE fix the order of fields
+
+Views 
+* slug-based/SEO friendly help topics
+* category breakdown
+* per-category listings of all items in category
+* single item access, with link back to category
+
+Search
+
+* sensible, scalable but database independent search
+* ability for user to rate usefulness of help items
+
+Templates
+
+* simple out-of-the-box views and templates extending base.html
+* AJAX-driven option too
+
+ 

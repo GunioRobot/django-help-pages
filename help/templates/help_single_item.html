@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load htmltools %}
+
+{% block page_title %} Help {% endblock %}
+
+{% block content %}
+<div>
+	<h2>{{item.heading}}</h2>
+	<div id="help-entry-wrapper-{{forloop.counter}}">
+		<div id="help-entry-item" class="help-category copy">
+			{{item.body|plainorhtml}}
+		</div>
+	</div>
+	<p>
+		<a href="{% url help_category_list %}">See all help topics and questions</a>
+	</p>
+</div>
+{% endblock %}

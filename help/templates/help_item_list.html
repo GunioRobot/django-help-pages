@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block page_title %} Help {% endblock %}
+
+{% block content %}
+<div>
+	<p>
+		<a href = "{% url help_category_list %}">Start</a> >
+		{% for cat in trail  %}
+		<a href = "{% url help_item_list cat.slug %}">{{cat}}</a>
+		{% if not forloop.last %} > {% endif %}
+		{% endfor %}
+	</p>
+	<h2>{{category}}</h2>
+	{% with category.subcategories as subcategories %}
+		{% if subcategories %}
+			Subsections of this section:
+		{% endif %}
+		{% for category in subcategories %}
+		{% with "includes/category_nest.html" as filename %}
+			{% include filename %}
+		{% endwith %}
+		{% endfor %}
+	{% endwith %} 
+	
+
+	{% if help_items|length == 0 %}
+		This section has no help items in it, but its subcategories may do
+	{% endif %}
+	{% for item in help_items %}
+	<div>
+		<h3>
+		{{item.heading}}
+		</h3>
+		<p>{{item.body}}</p>
+	</div>		
+	{% endfor %}
+	<p>
+		<a href="{% url help_category_list %}">Go back</a>
+	</p>
+</div>
+{% endblock %}
