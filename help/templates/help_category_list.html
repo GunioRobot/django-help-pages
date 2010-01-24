@@ -1,19 +1,23 @@
 {% extends "base.html" %}
 
+{% load help_tags %}
+
 {% block page_title %} Help {% endblock %}
 
 {% block content %}
-
 
 <h2>All categories</h2>
 <div>
 <ul>
 	<li><a href = "{% url help_category_list %}">Start</a></li>	
 {% for category in branches %}
-	{% with "includes/category_nest.html" as filename %}
+	{% with "category_nest.html" as filename %}
 		{% include filename %}
 	{% endwith %}
 {% endfor %}
 </ul>
 </div>
+
+{% help_search_form %}
+
 {% endblock %}

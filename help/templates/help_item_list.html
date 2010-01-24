@@ -17,7 +17,7 @@
 			Subsections of this section:
 		{% endif %}
 		{% for category in subcategories %}
-		{% with "includes/category_nest.html" as filename %}
+		{% with "category_nest.html" as filename %}
 			{% include filename %}
 		{% endwith %}
 		{% endfor %}
@@ -30,7 +30,7 @@
 	{% for item in help_items %}
 	<div>
 		<h3>
-		{{item.heading}}
+			<a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
 		</h3>
 		<p>{{item.body}}</p>
 	</div>		

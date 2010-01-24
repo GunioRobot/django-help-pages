@@ -8,25 +8,33 @@ Models
 
 * variable content of HelpItems - minimum is HTML, extend via either TinyMCE or other
 
-* ordering, within categories and overall
+* DONE ordering, within categories and overall
 
-* django-tagging for categories
+* tagging for categories
 * use tagging to suggest related topics
 * get_related_items() method, returning other items in cateory and/or items with shared tags
 
+Unit tests for:
+* subcategory joining; recursion limits
+* ordering
+* searching
+* tagging
+
 Admin
+* Better, less verbose list view pages
 * DONE fix the order of fields
 
 Views 
-* slug-based/SEO friendly help topics
-* category breakdown
-* per-category listings of all items in category
-* single item access, with link back to category
+* DONE slug-based/SEO friendly help topics
+* DONE category breakdown
+* DONE per-category listings of all items in category
+* DONE single item access, with link back to category
+
 
 Search
-
 * sensible, scalable but database independent search
 * ability for user to rate usefulness of help items
+* inclusion tag for searching help
 
 Templates
 

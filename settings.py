@@ -78,17 +78,20 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	os.path.join(FILEROOT, 'templates').replace('\\', '/'), #dynamically sets cwd/templates
+	os.path.join(FILEROOT, 'templates').replace('\\', '/'), #dynamically sets FILEROOT/templates
 )
 
 INSTALLED_APPS = (
+    #standard django 1.2 generated app list
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'help', #the django-help-pages core app
+    
+    #the django-help-pages core app
+    'help', 
 )
 
 #import any local settings 

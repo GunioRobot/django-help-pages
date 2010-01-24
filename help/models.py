@@ -1,5 +1,8 @@
 #help.models
+import re
+
 from django.db import models
+from help.modelutils import unescape
 
 class PublishedObjectsManager(models.Manager):
     """
@@ -18,7 +21,7 @@ class HelpBase(models.Model):
                 help_text='Lists will run from smaller numbers at top to bigger at bottom. Decimal points are allowed for fine control')
 
     #retain original manager, and add enabled-filtering one
-    objects = models.Manager()
+    objects   = models.Manager()
     published_objects = PublishedObjectsManager() #custom manager to make life easier
 
     class Meta:
@@ -45,10 +48,10 @@ class HelpCategory(HelpBase):
         """Returns a recursively generated list of any subcategories for the category"""
 
         children = []
-        subcats = list(self.helpcategory_set.all())
+        subcats = list(self.helpcategory_set.all().order_by('order'))
 
         for s in subcats:
-            cats = s.helpcategory_set.all()
+            cats = s.helpcategory_set.all().order_by('order')
             if len(cats) > 0:
                 children.append([s, s.subcategories])
             else:
@@ -67,6 +70,39 @@ class HelpCategory(HelpBase):
         return trail[::-1]
 
 
+class HelpItemSearchManager(PublishedObjectsManager):
+    """
+    Quick manager class to assist with search - extends PublishedObjectsManager 
+    so that it only searches published objects 
+    """
+
+    def search(self, search_terms):
+        try:
+            search_terms = search_terms[:64] #limit to 64 chars
+            print search_terms
+            query = None
+            qs = self.get_query_set() 
+
+            search_terms = unescape(search_terms)
+            query = search_terms.lower()
+            query = re.sub(r'\W+', ' ', query)    #strip non-alphanumerics from string
+            tokens = query.split()
+            print 'tokens',tokens
+
+            for t in tokens:
+                # iteratively build a chain of filter()s that narrow down the search selection
+                # to contain all words that are or start with every one of the tokens entered 
+                qs = qs.filter(denormed_search_terms__contains = " %s" % t)
+                
+            return qs
+
+        except Exception, e:
+            print e
+            #insert your logging call here
+            
+            return self.model.objects.none()
+
+
 class HelpItem(HelpBase):
     """
     Holds the actual help item info
@@ -75,15 +111,33 @@ class HelpItem(HelpBase):
     heading   = models.CharField(blank=False, max_length=255, help_text='No HTML in the this label, please')
     body      = models.TextField(blank=False, help_text="Main content for the Help item")
 
-    def __unicode__(self):
-         return u"%s: '%s' " % (self.category.title, self.heading)
+    denormed_search_terms = models.TextField(editable=False, blank=True, null=True)
+
+    #add another manager, to help with search
+    search_manager    = HelpItemSearchManager()
 
     class Meta:
         verbose_name=("Help item")
         verbose_name_plural=("Help item")
+
+    def save(self):
+        """
+        Overriding save() to denorm the search content - we could 
+        use Full Text Searching instead, but that's not DB-independent.
         
+        Includes category.title to improve hit usefulness
+        """
+        self.denormed_search_terms = self.heading.lower() + " " + self.body.lower() + " " + self.category.title.lower()
+        super(HelpItem, self).save()
+        
+    def __unicode__(self):
+         return u"%s: '%s' " % (self.category.title, self.heading)
+
+
     @property
     def related_items(self):
         "Returns a list of items in the same category as before"
         
-        
+        related = self.parent.helpitem_set.exclude(id=self.id)
+        print related
+        return related
