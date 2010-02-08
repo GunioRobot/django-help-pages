@@ -37,7 +37,33 @@ def help_search_form(query=None):
     
     search_form = SearchForm(kwargs)
 
-    print search_form
     return  { 
                 'search_form':search_form,
+            }
+            
+
+
+
+@register.inclusion_tag('includes/help_usefulness_rating.html')
+def help_usefulness_rating(item, request):
+
+    """ 
+    Inclusion tag to handle authenticated and (TODO) unauthenticated
+    users marking items as useful
+
+    Takes two arguments, the helpitem in question and also the request
+
+    """    
+    #look up to see if the user has rated this HelpItem
+    found_useful = request.user in item.users_who_found_this_useful.all()
+    if not found_useful:
+        found_not_useful = request.user in items.users_who_found_this_not_useful.all()
+        
+    usefulness_score = ("%s/%s") % item.get_usefulness_score()
+    
+    return {
+                'item':item,
+                'found_useful':found_useful,
+                'found_not_useful':found_not_useful,
+                'usefulness_score':usefulness_score
             }

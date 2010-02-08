@@ -1,0 +1,13 @@
+<div id="rating_for_item_{{item.id}}">
+	{% if not found_useful and not found_not_useful %}
+		<ul>
+			<li> Did you find this useful?</li>
+		</ul>	
+	{% else %}
+		{% if found_useful %}
+			You found this useful
+		{% else %}
+			You found this not useful
+		{% endif %}
+	{% endif %}
+</div>
