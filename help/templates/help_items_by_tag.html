@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load help_tags tagging_tags %}
+
+{% block page_title %} Help {% endblock %}
+
+{% block content %}
+    
+{% tagged_objects tag in help.HelpItem as tagged_items %}
+    
+    {% for item in tagged_items  %}
+        <a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
+    {% endfor %}
+
+{% endblock %}

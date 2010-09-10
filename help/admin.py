@@ -26,7 +26,7 @@ class HelpItemAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Item setup', { 
-            'fields': ('heading', 'category', 'body', 'published', 'slug', 'order') 
+            'fields': ('heading', 'category', 'body', 'help_tags', 'published', 'slug', 'order') 
         }),
     )
 

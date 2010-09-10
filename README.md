@@ -1,8 +1,13 @@
-Simple, pluggable help-section/FAQs app.
+#Simple, pluggable help-section/FAQs app.
 
-Still very much in progress.
+Still *very* much in progress.
 
-* Product backlog * 
+##Requirements
+
+ * Django 1.1+
+ * django-tagging
+
+## Product backlog 
 
 * DONE extensible heirarchy of HelpCategories
 * DONE 1..n HelpItems in each endpoint category

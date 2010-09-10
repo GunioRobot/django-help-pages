@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load help_tags %}
+{% load help_tags tagging_tags %}
 
 {% block page_title %} Help {% endblock %}
 
@@ -19,5 +19,14 @@
 </div>
 
 {% help_search_form %}
+
+Tagged items:
+{% tag_cloud_for_model help.HelpItem as help_tags %}
+
+{% for tag in help_tags %}
+{% with tag.name|urlencode as tag_name  %}    
+    <a href="{% url help_items_by_tag tag_name  %}">{{tag.name}}</a>
+{% endwith %}
+{% endfor %}     
 
 {% endblock %}

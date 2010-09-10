@@ -91,8 +91,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     
     #the django-help-pages core app
-    'help', 
+    'help',
+    #and its dependency
+    'tagging', 
 )
+
+#django-tagging settings
+FORCE_LOWERCASE_TAGS = True
+
+
 
 #import any local settings 
 try:

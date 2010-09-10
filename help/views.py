@@ -1,6 +1,8 @@
 #views for help app 
 from django.conf import settings
 
+import urllib
+
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
@@ -42,13 +44,22 @@ def item_list(request, identifier=None, template="help_item_list.html"):
             raise Http404
 
     help_items = HelpItem.published_objects.filter(category=category).order_by('order')
-    print help_items
     
     trail = category.trail
     
     return render_with_context(request, template, {'category':category, 'help_items':help_items, 'trail':trail } )
     
     
+    
+def items_by_tag(request, tag, template="help_items_by_tag.html"):
+    """
+    Lists all the items that are tagged with the relevant category
+    """
+
+    #convert tag back to unurlencoded
+    fixed_tag = urllib.unquote(tag)
+
+    return render_with_context(request, template, {'tag':fixed_tag} )
     
     
     
