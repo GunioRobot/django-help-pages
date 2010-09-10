@@ -11,8 +11,8 @@
 <ul>
 	<li><a href = "{% url help_category_list %}">Start</a></li>	
 {% for category in branches %}
-	{% with "category_nest.html" as filename %}
-		{% include filename %}
+	{% with "category_nest.html" as template_name %}
+		{% include template_name %}
 	{% endwith %}
 {% endfor %}
 </ul>

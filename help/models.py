@@ -84,7 +84,6 @@ class HelpItemSearchManager(PublishedObjectsManager):
     def search(self, search_terms):
         try:
             search_terms = search_terms[:64] #limit to 64 chars
-            print search_terms
             query = None
             qs = self.get_query_set() 
 
@@ -92,19 +91,16 @@ class HelpItemSearchManager(PublishedObjectsManager):
             query = search_terms.lower()
             query = re.sub(r'\W+', ' ', query)    #strip non-alphanumerics from string
             tokens = query.split()
-            print 'tokens',tokens
 
             for t in tokens:
                 # iteratively build a chain of filter()s that narrow down the search selection
                 # to contain all words that are or start with every one of the tokens entered 
                 qs = qs.filter(denormed_search_terms__contains = " %s" % t)
-                
+            
             return qs
 
         except Exception, e:
-            print e
-            #insert your logging call here
-            
+            logging.error("%s when searching for %s -- %s" % (type(e), search_terms, e) )
             return self.model.objects.none()
 
 
@@ -115,12 +111,6 @@ class HelpItem(HelpBase):
     category  = models.ForeignKey('HelpCategory')
     heading   = models.CharField(blank=False, max_length=255, help_text='No HTML in the this label, please')
     body      = models.TextField(blank=False, help_text="Main content for the Help item")
-
-    users_who_found_this_useful = models.ManyToManyField(User, related_name="user_found_helpful")
-    users_who_found_this_not_useful = models.ManyToManyField(User, related_name="user_found_not_helpful")
-    
-    total_useful_votes      = models.IntegerField(blank=True, null=True, default=0)
-    total_not_useful_votes  = models.IntegerField(blank=True, null=True, default=0)
 
     #add another manager, to help with search, plus a denormed search content column to speed things up
     search_manager    = HelpItemSearchManager()

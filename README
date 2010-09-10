@@ -8,11 +8,13 @@ Still very much in progress.
 * DONE 1..n HelpItems in each endpoint category
 * DONE ordering, within categories and overall
 
+* tagging for categories
+
 * variable content of HelpItems - minimum is HTML, extend via either TinyMCE or other rich text plugin
 
-* tagging for categories
 * use tagging to suggest related topics
 * get_related_items() method, returning other items in cateory and/or items with shared tags
+
 
 Unit tests for:
 * subcategory joining; recursion limits

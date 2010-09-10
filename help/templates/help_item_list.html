@@ -17,8 +17,8 @@
 			Subsections of this section:
 		{% endif %}
 		{% for category in subcategories %}
-		{% with "category_nest.html" as filename %}
-			{% include filename %}
+		{% with "category_nest.html" as template_name %}
+			{% include template_name %}
 		{% endwith %}
 		{% endfor %}
 	{% endwith %} 

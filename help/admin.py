@@ -32,7 +32,7 @@ class HelpItemAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {"slug": ("heading",)}    
     
-    raw_id_fields = ('category', 'users_who_found_this_useful', 'users_who_found_this_not_useful')
+    raw_id_fields = ('category',)
     
     list_filter = ('category',)
     list_display = ('heading', 'category', 'order', )
