@@ -8,8 +8,11 @@
     
 {% tagged_objects tag in help.HelpItem as tagged_items %}
     
+    <ul>
     {% for item in tagged_items  %}
-        <a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
+        <li>
+            <a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading|truncatewords:15}}</a> (Category:   <a href="{% url help_item_list item.category.slug %}">{{item.category.title }}</a>)
+        </li>
     {% endfor %}
-
+    </ul>
 {% endblock %}

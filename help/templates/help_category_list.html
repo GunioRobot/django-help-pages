@@ -18,9 +18,11 @@
 </ul>
 </div>
 
+
+<p>Example search inclusion tag<p>
 {% help_search_form %}
 
-Tagged items:
+<p>Tag cloud list</p>
 {% tag_cloud_for_model help.HelpItem as help_tags %}
 
 {% for tag in help_tags %}
@@ -28,5 +30,15 @@ Tagged items:
     <a href="{% url help_items_by_tag tag_name  %}">{{tag.name}}</a>
 {% endwith %}
 {% endfor %}     
+
+
+<p>Example of inclusion tags for all tagged items stored</p>
+
+
+{% for tag in help_tags  %}
+    <p>{{tag}}</p>
+    {% links_to_items_for_tag tag %}
+    
+{% endfor %}
 
 {% endblock %}

@@ -2,6 +2,8 @@ from django import template
 register = template.Library()
 
 from help.forms import SearchForm
+from tagging.models import TaggedItem
+from help.models import HelpItem
 
 @register.inclusion_tag('includes/help_search_form.html')
 def help_search_form(query=None):
@@ -44,26 +46,21 @@ def help_search_form(query=None):
 
 
 
-@register.inclusion_tag('includes/help_usefulness_rating.html')
-def help_usefulness_rating(item, request):
+
+@register.inclusion_tag('includes/links_to_items_for_tag.html')
+def links_to_items_for_tag(tag, limit=10):
 
     """ 
-    Inclusion tag to handle authenticated and (TODO) unauthenticated
-    users marking items as useful
+    Inclusion tag to render `limit` links to help items with the tag passed in as a UL
 
-    Takes two arguments, the helpitem in question and also the request
-
-    """    
-    #look up to see if the user has rated this HelpItem
-    found_useful = request.user in item.users_who_found_this_useful.all()
-    if not found_useful:
-        found_not_useful = request.user in items.users_who_found_this_not_useful.all()
-        
-    usefulness_score = ("%s/%s") % item.get_usefulness_score()
+    Takes one required and one optional arguments: `tag` and `limit`
+    """        
+    
+    if limit < 0: #watch for silly buggers
+        limit = 10
+    
+    items = TaggedItem.objects.get_by_model(HelpItem, tag)[:limit]
     
     return {
-                'item':item,
-                'found_useful':found_useful,
-                'found_not_useful':found_not_useful,
-                'usefulness_score':usefulness_score
+                'items':items,
             }
