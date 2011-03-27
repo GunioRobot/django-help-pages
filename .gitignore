@@ -4,3 +4,4 @@ local_settings.py
 *~
 *.log
 *bak
+/help/.DS_Store
