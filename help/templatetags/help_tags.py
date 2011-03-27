@@ -44,9 +44,6 @@ def help_search_form(query=None):
             }
             
 
-
-
-
 @register.inclusion_tag('includes/links_to_items_for_tag.html')
 def links_to_items_for_tag(tag, limit=10):
 
