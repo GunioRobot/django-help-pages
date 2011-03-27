@@ -9,47 +9,45 @@ Still *very* much in progress.
 
 ## Product backlog 
 
-* DONE extensible heirarchy of HelpCategories
-* DONE 1..n HelpItems in each endpoint category
-* DONE ordering, within categories and overall
+ * DONE extensible heirarchy of HelpCategories
+ * DONE 1..n HelpItems in each endpoint category
+ * DONE ordering, within categories and overall
 
-* tagging for categories
+ * DONE tagging for categories
 
-* variable content of HelpItems - minimum is HTML, extend via either TinyMCE or other rich text plugin
+ * use tagging to suggest related topics
+ * get_related_items() method, returning other items in cateory and/or items with shared tags
 
-* use tagging to suggest related topics
-* get_related_items() method, returning other items in cateory and/or items with shared tags
+ * Unit tests for:
+  * subcategory joining; recursion limits
+  * ordering
+  * searching
+  * tagging
+  (This is what I get for breaking my TDD approach...)
 
+ * Views 
+  * DONE slug-based/SEO friendly help topics
+  * DONE category breakdown
+  * DONE per-category listings of all items in category
+  * DONE single item access, with link back to category
+  * DONE tag-related items
 
-Unit tests for:
-* subcategory joining; recursion limits
-* ordering
-* searching
-* tagging
-(This is what I get for breaking my TDD approach...)
+ * Search
+  * DONE sensible, scalable but database independent search
+  * DONE inclusion tag for searching help
 
-Views 
-* DONE slug-based/SEO friendly help topics
-* DONE category breakdown
-* DONE per-category listings of all items in category
-* DONE single item access, with link back to category
+  * Ability for any user to rate usefulness (boolean) of help items 
+    + use cookies to remember whether the user has rated this before
+    + possibly track which authenticated users have marked this as useful
 
-Search
-* DONE sensible, scalable but database independent search
-* DONE inclusion tag for searching help
+ * Cacheing
+  * add cache support
+  * cache-buster, too, for when users rate something as being useful
 
-* Ability for any user to rate usefulness (boolean) of help items 
-  + use cookies to remember whether the user has rated this before
-  + possibly track which authenticated users have marked this as useful
+ * Templates
+  * DONE simple out-of-the-box views and templates extending base.html
+  * AJAX-driven option too
 
-Cacheing
-* add cache support
-  + cache-buster, too, for when users rate something as being useful
-
-Templates
-* DONE simple out-of-the-box views and templates extending base.html
-* AJAX-driven option too
-
-Admin
-* Better, less verbose list view pages
-* DONE fix the order of fields to be more sane
+ * Admin
+  * Better, less verbose list view pages
+  * DONE fix the order of fields to be more sane
