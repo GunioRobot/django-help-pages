@@ -22,7 +22,7 @@ class PublishedObjectsManager(models.Manager):
 class HelpBase(models.Model):
     """Abstract base model for Help models"""
 
-    slug      = models.SlugField(help_text="Automatically generated; editable, but do so with caution as it changes URLs")
+    slug      = models.SlugField(unique=True, help_text="Automatically generated; editable, but do so with caution as it changes URLs")
     published = models.BooleanField("Live on site?",  default=True) 
     order     = models.FloatField(default="1.0", 
                 help_text='Lists will run from smaller numbers at top to bigger at bottom. Decimal points are allowed for fine control')
