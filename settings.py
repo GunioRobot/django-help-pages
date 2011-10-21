@@ -89,11 +89,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    
+
     #the django-help-pages core app
     'help',
     #and its dependency
-    'tagging', 
+    'tagging',
 )
 
 #django-tagging settings
@@ -101,7 +101,7 @@ FORCE_LOWERCASE_TAGS = True
 
 
 
-#import any local settings 
+#import any local settings
 try:
     from local_settings import *
 except:

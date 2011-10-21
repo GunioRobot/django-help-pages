@@ -13,18 +13,18 @@ from help.modelutils import unescape, update_specific_fields
 
 class PublishedObjectsManager(models.Manager):
     """
-    Auto-filters-out disabled/unpublished messages 
+    Auto-filters-out disabled/unpublished messages
     """
     def get_query_set(self):
         return super(PublishedObjectsManager, self).get_query_set().exclude(published=False)
-        
+
 
 class HelpBase(models.Model):
     """Abstract base model for Help models"""
 
     slug      = models.SlugField(unique=True, help_text="Automatically generated; editable, but do so with caution as it changes URLs")
-    published = models.BooleanField("Live on site?",  default=True) 
-    order     = models.FloatField(default="1.0", 
+    published = models.BooleanField("Live on site?",  default=True)
+    order     = models.FloatField(default="1.0",
                 help_text='Lists will run from smaller numbers at top to bigger at bottom. Decimal points are allowed for fine control')
 
     #retain original manager, and add enabled-filtering one
@@ -38,7 +38,7 @@ class HelpBase(models.Model):
 
 class HelpCategory(HelpBase):
     """
-    Main node for a topic area or sub-topic area 
+    Main node for a topic area or sub-topic area
     """
     parent    = models.ForeignKey('HelpCategory', null=True, blank=True)
     title     = models.CharField(blank=False, max_length=255, help_text='No HTML in the this label, please')
@@ -64,7 +64,7 @@ class HelpCategory(HelpBase):
             else:
                 children.append([s])
         return children
-        
+
     @property
     def trail(self):
         trail = []
@@ -72,22 +72,22 @@ class HelpCategory(HelpBase):
         trail.append(self)
         while parent is not None:
             trail.append(parent)
-            parent = parent.parent 
-        
+            parent = parent.parent
+
         return trail[::-1]
 
 
 class HelpItemSearchManager(PublishedObjectsManager):
     """
-    Quick manager class to assist with search - extends PublishedObjectsManager 
-    so that it only searches published objects 
+    Quick manager class to assist with search - extends PublishedObjectsManager
+    so that it only searches published objects
     """
 
     def search(self, search_terms):
         try:
             search_terms = search_terms[:64] #limit to 64 chars
             query = None
-            qs = self.get_query_set() 
+            qs = self.get_query_set()
 
             search_terms = unescape(search_terms)
             query = search_terms.lower()
@@ -96,9 +96,9 @@ class HelpItemSearchManager(PublishedObjectsManager):
 
             for t in tokens:
                 # iteratively build a chain of filter()s that narrow down the search selection
-                # to contain all words that are or start with every one of the tokens entered 
+                # to contain all words that are or start with every one of the tokens entered
                 qs = qs.filter(denormed_search_terms__contains = " %s" % t)
-            
+
             return qs
 
         except Exception, e:
@@ -123,26 +123,26 @@ class HelpItem(HelpBase):
     class Meta:
         verbose_name=("Help item")
         verbose_name_plural=("Help item")
-        
+
     def _get_tags(self):
         return Tag.objects.get_for_object(self)
 
     def _set_tags(self, tag_list):
         Tag.objects.update_tags(self, tag_list)
 
-    tags = property(_get_tags, _set_tags)    
+    tags = property(_get_tags, _set_tags)
 
 
     def save(self):
         """
-        Overriding save() to denorm the search content - we could 
+        Overriding save() to denorm the search content - we could
         use Full Text Searching instead, but that's not DB-independent.
-        
+
         Includes category.title to improve hit usefulness
         """
         self.denormed_search_terms = self.heading.lower() + " " + self.body.lower() + " " + self.category.title.lower()
         super(HelpItem, self).save()
-        
+
     def __unicode__(self):
          return u"%s: '%s' " % (self.category.title, self.heading)
 

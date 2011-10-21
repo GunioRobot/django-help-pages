@@ -21,8 +21,8 @@
 			{% include template_name %}
 		{% endwith %}
 		{% endfor %}
-	{% endwith %} 
-	
+	{% endwith %}
+
 
 	{% if help_items|length == 0 %}
 		This section has no help items in it, but its subcategories may do
@@ -33,7 +33,7 @@
 			<a href="{% url help_single_item item.category.slug item.slug %}">{{item.heading}}</a>
 		</h3>
 		<p>{{item.body}}</p>
-	</div>		
+	</div>
 	{% endfor %}
 	<p>
 		<a href="{% url help_category_list %}">Go back</a>

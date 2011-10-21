@@ -5,9 +5,9 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Tag'
         db.create_table('tagging_tag', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -26,10 +26,10 @@ class Migration(SchemaMigration):
 
         # Adding unique constraint on 'TaggedItem', fields ['tag', 'content_type', 'object_id']
         db.create_unique('tagging_taggeditem', ['tag_id', 'content_type_id', 'object_id'])
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Tag'
         db.delete_table('tagging_tag')
 
@@ -38,8 +38,8 @@ class Migration(SchemaMigration):
 
         # Removing unique constraint on 'TaggedItem', fields ['tag', 'content_type', 'object_id']
         db.delete_unique('tagging_taggeditem', ['tag_id', 'content_type_id', 'object_id'])
-    
-    
+
+
     models = {
         'contenttypes.contenttype': {
             'Meta': {'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
@@ -61,5 +61,5 @@ class Migration(SchemaMigration):
             'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'items'", 'to': "orm['tagging.Tag']"})
         }
     }
-    
+
     complete_apps = ['tagging']

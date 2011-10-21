@@ -5,9 +5,9 @@
 {% block page_title %} Help {% endblock %}
 
 {% block content %}
-    
+
 {% tagged_objects tag in help.HelpItem as tagged_items %}
-    
+
     <ul>
     {% for item in tagged_items  %}
         <li>

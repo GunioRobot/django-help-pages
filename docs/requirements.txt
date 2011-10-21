@@ -1,6 +1,6 @@
 # Requirements for django-help-pages
 
 * Python 2.4+ (or earlier if you're happy to tweak the decorator syntax)
-* Django 1.2+ (or 1.0.2+ if you're willing to adapt the templates to not use 1.2's 'smart if') 
+* Django 1.2+ (or 1.0.2+ if you're willing to adapt the templates to not use 1.2's 'smart if')
 * django.contrib.admin enabled and in settings.INSTALLED_APPS
 * django.contrib.auth in settings.INSTALLED_APPS

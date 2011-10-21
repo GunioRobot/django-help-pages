@@ -6,7 +6,7 @@ import re, htmlentitydefs
 
 def unescape(text):
     """
-    Hat-tip to http://effbot.org/zone/re-sub.htm#unescape-html        
+    Hat-tip to http://effbot.org/zone/re-sub.htm#unescape-html
     """
     def fixup(m):
         text = m.group(0)
@@ -27,15 +27,15 @@ def unescape(text):
                 pass
         return text # leave as is
     return re.sub("&#?\w+;", fixup, text)
-    
 
 
-    
+
+
 def update_specific_fields(instance, **kwargs):
-    """                                                                         
-    Update selected model fields in the database, but leave the other           
-    fields alone. Use this rather than model.save() for performance             
-    and data consistency.                                                       
+    """
+    Update selected model fields in the database, but leave the other
+    fields alone. Use this rather than model.save() for performance
+    and data consistency.
     Based on: http://www.djangosnippets.org/snippets/479/
     """
     try:
@@ -52,7 +52,7 @@ def update_specific_fields(instance, **kwargs):
                 values.append(value)
             except FieldDoesNotExist, e:
                 pass
-        sql.pop(-1) # Remove the last comma                                         
+        sql.pop(-1) # Remove the last comma
         sql.extend(['WHERE', 'id', '=', '%s'])
         values.append(instance.id)
         sql = ' '.join(sql)

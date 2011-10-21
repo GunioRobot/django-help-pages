@@ -7,7 +7,7 @@ Still *very* much in progress.
  * Django 1.1+
  * django-tagging
 
-## Product backlog 
+## Product backlog
 
  * DONE extensible heirarchy of HelpCategories
  * DONE 1..n HelpItems in each endpoint category
@@ -25,7 +25,7 @@ Still *very* much in progress.
   * tagging
   (This is what I get for breaking my TDD approach...)
 
- * Views 
+ * Views
   * DONE slug-based/SEO friendly help topics
   * DONE category breakdown
   * DONE per-category listings of all items in category
@@ -36,7 +36,7 @@ Still *very* much in progress.
   * DONE sensible, scalable but database independent search
   * DONE inclusion tag for searching help
 
-  * Ability for any user to rate usefulness (boolean) of help items 
+  * Ability for any user to rate usefulness (boolean) of help items
     + use cookies to remember whether the user has rated this before
     + possibly track which authenticated users have marked this as useful
 

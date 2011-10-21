@@ -9,7 +9,7 @@
 <h2>All categories</h2>
 <div>
 <ul>
-	<li><a href = "{% url help_category_list %}">Start</a></li>	
+	<li><a href = "{% url help_category_list %}">Start</a></li>
 {% for category in branches %}
 	{% with "category_nest.html" as template_name %}
 		{% include template_name %}
@@ -26,10 +26,10 @@
 {% tag_cloud_for_model help.HelpItem as help_tags %}
 
 {% for tag in help_tags %}
-{% with tag.name|urlencode as tag_name  %}    
+{% with tag.name|urlencode as tag_name  %}
     <a href="{% url help_items_by_tag tag_name  %}">{{tag.name}}</a>
 {% endwith %}
-{% endfor %}     
+{% endfor %}
 
 
 <p>Example of inclusion tags for all tagged items stored</p>
@@ -38,7 +38,7 @@
 {% for tag in help_tags  %}
     <p>{{tag}}</p>
     {% links_to_items_for_tag tag %}
-    
+
 {% endfor %}
 
 {% endblock %}
